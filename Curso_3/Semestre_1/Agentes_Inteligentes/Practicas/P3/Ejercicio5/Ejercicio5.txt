@@ -1,0 +1,19 @@
+Ejecutamos el código del Ejercicio 4 y solo tuve que modificar el updateKB.bash en las líneas de:
+  values:
+  - {key: 'from', value: 'wp00'}
+  - {key: 'to', value: 'wp01'}
+  - {key: 'o', value: 'right'}"
+en los key tuve que cambiarlo para adaptarlo a mi programa
+
+Terminal 1:
+cd ~/catkin_ws/src/ai_rosplan/ai_domain/common
+roslaunch ai_planning main.launch domain_path:=$PWD/domain4.pddl problem_path:=$PWD/problem4.pddl optimise:=true
+Terminal 2:
+rosrun ai_planning robot_plan.bash
+Terminal 3:
+cd ~/catkin_ws/src/ai_rosplan/ai_planning/scripts
+./updateKB.bash
+
+Se va a quedar girando hasta que acaba de girar ahí da error y solo hay que volver a lanzar el plan
+Cuando falle otra vez en Terminal 2:
+rosrun ai_planning robot_plan.bash
