@@ -1,0 +1,25 @@
+<launch>
+  <arg name="world" default="$(find sumo_sim)/worlds/sumo_ring.world"/>
+
+  <!-- lanzar Gazebo con nuestro mundo -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(arg world)"/>
+  </include>
+
+  <!-- spawn robots -->
+
+
+  <node pkg="gazebo_ros" type="spawn_model" name="spawn_robot1"
+        args="-file $(find sumo_sim)/models/robot1/model.sdf -sdf -model robot1 -x -0.7 -y 0 -z 0.12" />
+
+  <node pkg="gazebo_ros" type="spawn_model" name="spawn_robot2"
+        args="-file $(find sumo_sim)/models/robot2/model.sdf -sdf -model robot2 -x 0.7 -y 0 -z 0.12 -Y 3.1416" />
+
+  <!-- árbitro -->
+
+  <node pkg="sumo_sim" type="referee.py" name="referee" output="screen" />
+
+  <!-- dos controladores AI (mismo script, 2 instancias con namespace distinto) -->
+  <node pkg="sumo_sim" type="sumo_ai_robot1.py" name="ai_robot1" args="robot1" output="screen"/>
+  <node pkg="sumo_sim" type="sumo_ai_robot2.py" name="ai_robot2" args="robot2" output="screen"/>
+</launch>
